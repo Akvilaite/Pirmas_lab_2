@@ -28,7 +28,7 @@ int main() {
     }
 
     if (budas == 4) {
-        string failoVardas = "studentai.txt"; // pakeiskite pagal poreikį
+        string failoVardas = "studentai.txt"; 
         Grupe = Stud_from_file(failoVardas);
     }
     else {

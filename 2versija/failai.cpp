@@ -9,7 +9,7 @@ using namespace std;
 vector<Studentas> Stud_from_file(const string& fname) {
     ifstream fd(fname);
     vector<Studentas> grupe;
-    grupe.reserve(1000000);
+    grupe.reserve(10000000);
 
     if (!fd) {
         cout << "Nepavyko atidaryti failo.\n";
