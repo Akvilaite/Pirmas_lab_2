@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <iomanip>
 #include <string>
 #include <vector>
@@ -9,21 +9,18 @@
 #include <sstream>
 #include <limits>
 
-using std::cout;
-using std::cin;
-using std::endl;
 using std::string;
 using std::vector;
+using std::ifstream;
+using std::ofstream;
+using std::istringstream;
 using std::setw;
 using std::left;
 using std::right;
 using std::fixed;
 using std::setprecision;
-using std::sort;
-using std::ifstream;
-using std::getline;
-using std::istringstream;
-using std::ofstream;
+using std::cin;
+using std::cout;
 
 struct Studentas {
     string var;
@@ -35,11 +32,15 @@ struct Studentas {
 };
 
 Studentas Stud_iv(int budas);
-vector<Studentas> Stud_from_file(string fname);
+vector<Studentas> Stud_from_file(const string& fname);
 void Spausdinti(const vector<Studentas>& Grupe, const string& out_file = "rezultatai.txt");
 
 int main() {
-    srand(time(0));
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+
+    srand(static_cast<unsigned>(time(0)));
+
     vector<Studentas> Grupe;
 
     int budas;
@@ -48,69 +49,99 @@ int main() {
     cout << "2 - nezinomas pazymiu skaicius (baigti ENTER x2)\n";
     cout << "3 - generuoti pazymius ir egzamina\n";
     cout << "4 - nuskaityti duomenis is failo\n";
-
     while (!(cin >> budas) || budas < 1 || budas > 4) {
-        cout << "Netinkamas pasirinkimas. Bandykite dar karta: ";
+        cout << "Neteisingas pasirinkimas. Bandykite dar karta: ";
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
     if (budas == 4) {
-        string failoVardas;
-        cout << "Iveskite failo kelia: ";
-        cin >> failoVardas;
+        string failoVardas = "C://Users//akvil//OneDrive//Desktop//koduxai//objektinis//1 uzduotis//vo2//pasibandymai//generav//studentai10000.txt";
         Grupe = Stud_from_file(failoVardas);
     }
     else {
-        int m;
         cout << "Kiek studentu grupeje: ";
+        int m;
         while (!(cin >> m) || m <= 0) {
             cout << "Netinkamas skaicius. Bandykite dar karta: ";
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
-        for (int z = 0; z < m; z++)
+
+        for (int z = 0; z < m; ++z)
             Grupe.push_back(Stud_iv(budas));
     }
 
-    sort(Grupe.begin(), Grupe.end(), [](const Studentas& a, const Studentas& b) {
+   
+    std::sort(Grupe.begin(), Grupe.end(), [](const Studentas& a, const Studentas& b) {
         if (a.var == b.var)
-            return a.pav > b.pav;
-        return a.var > b.var;
+            return a.pav < b.pav;
+        return a.var < b.var;
         });
 
-    Spausdinti(Grupe);
+    int kriterijus;
+    cout << "\nPasirinkite kriteriju studentu dalinimui:\n";
+    cout << "1 - pagal vidurki (galVid)\n";
+    cout << "2 - pagal mediana (galMed)\n";
+    while (!(cin >> kriterijus) || (kriterijus != 1 && kriterijus != 2)) {
+        cout << "Neteisingas pasirinkimas. Bandykite dar karta: ";
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+
+
+    vector<Studentas> vargsiukai;
+    vector<Studentas> kietiakiai;
+
+    for (const auto& st : Grupe) {
+        double kriterijaus_reiksme = (kriterijus == 1) ? st.galVid : st.galMed;
+        if (kriterijaus_reiksme < 5.0)
+            vargsiukai.push_back(st);
+        else
+            kietiakiai.push_back(st);
+    }
+
+    Spausdinti(vargsiukai, "vargsiukai.txt");
+    Spausdinti(kietiakiai, "kietiakiai.txt");
+
+    cout << "Rezultatai issaugoti i failus: vargsiukai.txt ir kietiakiai.txt\n";
+
+    return 0;
 }
 
 Studentas Stud_iv(int budas) {
-    Studentas pirmas;
+    Studentas st;
     cout << "\n--- Naujas studentas ---\n";
     cout << "Vardas: ";
-    cin >> pirmas.var;
+    cin >> st.var;
     cout << "Pavarde: ";
-    cin >> pirmas.pav;
+    cin >> st.pav;
 
     int sum = 0;
     int n = 0;
 
     if (budas == 1) {
-        cout << "Kiek pazymiu turi " << pirmas.var << " " << pirmas.pav << ": ";
-        cin >> n;
-        for (int a = 0; a < n; a++) {
-            int laik_paz;
-            while (true) {
-                cout << a + 1 << ": ";
-                if (cin >> laik_paz && laik_paz >= 1 && laik_paz <= 10) break;
-                cout << "Netinkamas pazymys. Iveskite skaiciu nuo 1 iki 10." << endl;
+        cout << "Kiek pazymiu turi " << st.var << " " << st.pav << ": ";
+        while (!(cin >> n) || n <= 0) {
+            cout << "Netinkamas skaicius. Bandykite dar karta: ";
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+
+        for (int i = 0; i < n; i++) {
+            int laik;
+            cout << i + 1 << ": ";
+            while (!(cin >> laik) || laik < 1 || laik > 10) {
+                cout << "Netinkamas pazymys. Bandykite dar karta: ";
                 cin.clear();
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
-            pirmas.paz.push_back(laik_paz);
-            sum += laik_paz;
+            st.paz.push_back(laik);
+            sum += laik;
         }
     }
     else if (budas == 2) {
-        cout << "Iveskite pazymius (baigti ENTER x2):" << endl;
+        cout << "Iveskite pazymius (baigti ENTER x2):\n";
         cin.ignore();
         string line;
         int tuscios = 0;
@@ -123,154 +154,138 @@ Studentas Stud_iv(int budas) {
             }
             tuscios = 0;
             try {
-                int laik_paz = std::stoi(line);
-                if (laik_paz < 1 || laik_paz > 10) throw std::invalid_argument("Range");
-                pirmas.paz.push_back(laik_paz);
-                sum += laik_paz;
+                int laik = std::stoi(line);
+                if (laik < 1 || laik > 10) throw std::invalid_argument("Blogas intervalas");
+                st.paz.push_back(laik);
+                sum += laik;
             }
             catch (...) {
-                cout << "Netinkamas ivedimas. Iveskite skaiciu nuo 1 iki 10." << endl;
+                cout << "Netinkama ivestis, ignoruojama.\n";
             }
         }
     }
     else if (budas == 3) {
-        cout << "Kiek pazymiu sugeneruoti " << pirmas.var << " " << pirmas.pav << ": ";
-        cin >> n;
-        for (int i = 0; i < n; i++) {
-            int laik_paz = rand() % 10 + 1;
-            pirmas.paz.push_back(laik_paz);
-            sum += laik_paz;
+        cout << "Kiek pazymiu sugeneruoti: ";
+        while (!(cin >> n) || n <= 0) {
+            cout << "Netinkamas skaicius. Bandykite dar karta: ";
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
-        pirmas.egz = rand() % 10 + 1;
+
+        for (int i = 0; i < n; i++) {
+            int laik = rand() % 10 + 1;
+            st.paz.push_back(laik);
+            sum += laik;
+        }
+        st.egz = rand() % 10 + 1;
         cout << "Sugeneruoti pazymiai: ";
-        for (auto x : pirmas.paz) cout << x << " ";
-        cout << " | Egz: " << pirmas.egz << endl;
+        for (auto x : st.paz) cout << x << " ";
+        cout << "| Egz: " << st.egz << "\n";
     }
 
     if (budas != 3) {
-        cout << "Iveskite egzamino paz.: ";
-        while (!(cin >> pirmas.egz) || pirmas.egz < 1 || pirmas.egz > 10) {
-            cout << "Netinkamas pazymys. Iveskite skaiciu nuo 1 iki 10." << endl;
+        cout << "Iveskite egzamino pazymi: ";
+        while (!(cin >> st.egz) || st.egz < 1 || st.egz > 10) {
+            cout << "Netinkamas egzamino pazymys. Bandykite dar karta: ";
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
 
-    n = pirmas.paz.size();
+    n = st.paz.size();
     if (n > 0) {
-        pirmas.galVid = (double)sum / n * 0.4 + pirmas.egz * 0.6;
-        sort(pirmas.paz.begin(), pirmas.paz.end());
-        double med;
-        if (n % 2 == 0)
-            med = (pirmas.paz[n / 2 - 1] + pirmas.paz[n / 2]) / 2.0;
-        else
-            med = pirmas.paz[n / 2];
-        pirmas.galMed = med * 0.4 + pirmas.egz * 0.6;
+        st.galVid = double(sum) / n * 0.4 + st.egz * 0.6;
+        std::sort(st.paz.begin(), st.paz.end());
+        double med = (n % 2 == 0) ?
+            (st.paz[n / 2 - 1] + st.paz[n / 2]) / 2.0 :
+            st.paz[n / 2];
+        st.galMed = med * 0.4 + st.egz * 0.6;
     }
     else {
-        pirmas.galVid = pirmas.egz * 0.6;
-        pirmas.galMed = pirmas.egz * 0.6;
+        st.galVid = st.egz * 0.6;
+        st.galMed = st.egz * 0.6;
     }
 
-    return pirmas;
+    return st;
 }
 
-vector<Studentas> Stud_from_file(string fname) {
+vector<Studentas> Stud_from_file(const string& fname) {
     ifstream fd(fname);
     vector<Studentas> grupe;
+    grupe.reserve(1000000);
+
     if (!fd) {
-        cout << "Nepavyko atidaryti failo: " << fname << endl;
+        cout << "Nepavyko atidaryti failo.\n";
         return grupe;
     }
 
-    string header;
-    getline(fd, header);
+    string eilute;
+    getline(fd, eilute);
 
-    while (getline(fd, header)) {
-        if (header.empty()) continue;
-
-        istringstream iss(header);
+    while (getline(fd, eilute)) {
+        if (eilute.empty()) continue;
+        istringstream iss(eilute);
         Studentas st;
         iss >> st.var >> st.pav;
 
         string temp;
         vector<int> laik;
+        bool klaida = false;
 
         while (iss >> temp) {
             try {
                 int paz = std::stoi(temp);
-                if (paz < 1 || paz > 10) throw std::invalid_argument("Range");
+                if (paz < 1 || paz > 10) throw std::invalid_argument("Neteisingas pazymys");
                 laik.push_back(paz);
             }
             catch (...) {
-                cout << "Blogas pazymys eiluteje: " << header << " -> praleidziama" << endl;
-                laik.clear();
+                klaida = true;
                 break;
             }
         }
 
-        if (laik.size() < 1) continue;
+        if (klaida || laik.empty()) continue;
 
         st.egz = laik.back();
         laik.pop_back();
-        st.paz = laik;
+        st.paz = std::move(laik);
 
         int sum = 0;
         for (int x : st.paz) sum += x;
 
-        if (!st.paz.empty()) {
-            st.galVid = (double)sum / st.paz.size() * 0.4 + st.egz * 0.6;
-            sort(st.paz.begin(), st.paz.end());
-            double med;
-            if (st.paz.size() % 2 == 0)
-                med = (st.paz[st.paz.size() / 2 - 1] + st.paz[st.paz.size() / 2]) / 2.0;
-            else
-                med = st.paz[st.paz.size() / 2];
-            st.galMed = med * 0.4 + st.egz * 0.6;
-        }
-        else {
-            st.galVid = st.egz * 0.6;
-            st.galMed = st.egz * 0.6;
-        }
+        size_t n = st.paz.size();
+        st.galVid = double(sum) / n * 0.4 + st.egz * 0.6;
 
-        grupe.push_back(st);
+        std::sort(st.paz.begin(), st.paz.end());
+        double med = (n % 2 == 0) ?
+            (st.paz[n / 2 - 1] + st.paz[n / 2]) / 2.0 :
+            st.paz[n / 2];
+        st.galMed = med * 0.4 + st.egz * 0.6;
+
+        grupe.emplace_back(std::move(st));
     }
 
     return grupe;
 }
 
 void Spausdinti(const vector<Studentas>& Grupe, const string& out_file) {
-    cout << left << setw(15) << "Vardas"
-        << left << setw(20) << "Pavarde"
-        << right << setw(20) << "Galutinis (Vid.)"
-        << right << setw(20) << "Galutinis (Med.)"
-        << endl;
-
-    cout << std::string(75, '-') << endl;
-
     ofstream fout(out_file);
+    if (!fout) return;
+
     fout << left << setw(15) << "Vardas"
         << left << setw(20) << "Pavarde"
         << right << setw(20) << "Galutinis (Vid.)"
-        << right << setw(20) << "Galutinis (Med.)"
-        << endl;
+        << right << setw(20) << "Galutinis (Med.)" << '\n';
 
-    fout << std::string(75, '-') << endl;
+    fout << std::string(75, '-') << '\n';
 
-    for (const auto& Past : Grupe) {
-        cout << left << setw(15) << Past.var
-            << left << setw(20) << Past.pav
-            << right << setw(20) << fixed << setprecision(2) << Past.galVid
-            << right << setw(20) << fixed << setprecision(2) << Past.galMed
-            << endl;
-
-        fout << left << setw(15) << Past.var
-            << left << setw(20) << Past.pav
-            << right << setw(20) << fixed << setprecision(2) << Past.galVid
-            << right << setw(20) << fixed << setprecision(2) << Past.galMed
-            << endl;
+    for (const auto& st : Grupe) {
+        fout << left << setw(15) << st.var
+            << left << setw(20) << st.pav
+            << right << setw(20) << fixed << setprecision(2) << st.galVid
+            << right << setw(20) << fixed << setprecision(2) << st.galMed
+            << '\n';
     }
 
     fout.close();
-    cout << "\nRezultatai issaugoti faile: " << out_file << endl;
 }
