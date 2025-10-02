@@ -1,7 +1,7 @@
 # Pirmas_lab_2
 Analizes laikas  naudojant 1000 duomenu:
 
-	  su senu kodu, isvedimas tiesiai i faila                                         su nauju kodu
+	  su senu kodu, isvedimas tiesiai i faila                  su nauju kodu
    
  	 Duomenu nuskaitymas: 0.0114227 s                    Duomenu nuskaitymas: 0.0052138 s
                                    
@@ -15,7 +15,7 @@ Analizes laikas  naudojant 1000 duomenu:
 
 Analizes laikas naudojant 10 000 eiluciu:
 
-	su senu kodu, isvedimas tiesiai i faila                            su nauju kodu
+	su senu kodu, isvedimas tiesiai i faila                    su nauju kodu
 	
 	Duomenu nuskaitymas: 0.0865154 s                    Duomenu nuskaitymas: 0.0370865 s
 	
@@ -30,7 +30,7 @@ Analizes laikas naudojant 10 000 eiluciu:
 
 Analizes laikas naudojant 100 000 eiluciu:
 
-	su senu kodu, isvedimas tiesiai i faila                                su nauju kodu
+	su senu kodu, isvedimas tiesiai i faila                  su nauju kodu
 
 	Duomenu nuskaitymas: 0.796201 s                    Duomenu nuskaitymas: 0.363438 s
 
@@ -45,7 +45,7 @@ Analizes laikas naudojant 100 000 eiluciu:
 
 Analizes laikas naudojant 1 000 000:
 
-	su senu kodu, isvedimas tiesiai i faila     				su nauju kodu
+	su senu kodu, isvedimas tiesiai i faila     			su nauju kodu
 	
 	Duomenu nuskaitymas: 8.39851 s                    Duomenu nuskaitymas: 3.55517 s
 
@@ -60,7 +60,7 @@ Analizes laikas naudojant 1 000 000:
 
 Analizes laikas naudojant 10 000 000 eiluciu:
 
-	su senu kodu, isvedimas tiesiai i faila           su nauju kodu:  
+	su senu kodu, isvedimas tiesiai i faila           		su nauju kodu
 	
 	Duomenu nuskaitymas: 108.27 s                    Duomenu nuskaitymas: 39.5033 s
 	
