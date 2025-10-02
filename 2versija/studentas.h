@@ -13,7 +13,6 @@ struct Studentas {
     double galMed = 0.0;
 };
 
-// Funkcijos, susijusios su studento duomenimis
 Studentas Stud_iv(int budas);
 
 #endif
