@@ -1,23 +1,24 @@
 #include "failai.h"
+#include <iostream>
 #include <fstream>
 #include <sstream>
-#include <iostream>
+#include <iomanip>
 #include <algorithm>
+#include <ctime>
+#include <cstdlib>
 
 using namespace std;
 
 vector<Studentas> Stud_from_file(const string& fname) {
     ifstream fd(fname);
     vector<Studentas> grupe;
-    grupe.reserve(10000000);
-
     if (!fd) {
         cout << "Nepavyko atidaryti failo.\n";
         return grupe;
     }
 
     string eilute;
-    getline(fd, eilute);
+    getline(fd, eilute); // praleidžiam antrašt?
 
     while (getline(fd, eilute)) {
         if (eilute.empty()) continue;
@@ -25,42 +26,77 @@ vector<Studentas> Stud_from_file(const string& fname) {
         Studentas st;
         iss >> st.var >> st.pav;
 
-        string temp;
         vector<int> laik;
-        bool klaida = false;
-
-        while (iss >> temp) {
-            try {
-                int paz = stoi(temp);
-                if (paz < 1 || paz > 10) throw invalid_argument("Neteisingas pazymys");
-                laik.push_back(paz);
-            }
-            catch (...) {
-                klaida = true;
-                break;
-            }
-        }
-
-        if (klaida || laik.empty()) continue;
+        int val;
+        while (iss >> val) laik.push_back(val);
+        if (laik.size() < 2) continue;
 
         st.egz = laik.back();
         laik.pop_back();
-        st.paz = move(laik);
+        st.paz = laik;
 
         int sum = 0;
         for (int x : st.paz) sum += x;
-
-        size_t n = st.paz.size();
-        st.galVid = double(sum) / n * 0.4 + st.egz * 0.6;
+        double vid = double(sum) / st.paz.size();
+        st.galVid = vid * 0.4 + st.egz * 0.6;
 
         sort(st.paz.begin(), st.paz.end());
-        double med = (n % 2 == 0) ?
-            (st.paz[n / 2 - 1] + st.paz[n / 2]) / 2.0 :
-            st.paz[n / 2];
+        double med = (st.paz.size() % 2 == 0)
+            ? (st.paz[st.paz.size() / 2 - 1] + st.paz[st.paz.size() / 2]) / 2.0
+            : st.paz[st.paz.size() / 2];
         st.galMed = med * 0.4 + st.egz * 0.6;
 
-        grupe.emplace_back(move(st));
+        grupe.push_back(st);
     }
 
     return grupe;
+}
+
+void Spausdinti(const vector<Studentas>& Grupe, const string& out_file) {
+    ofstream fout(out_file);
+    if (!fout) return;
+
+    fout << left << setw(15) << "Vardas"
+        << left << setw(20) << "Pavarde"
+        << right << setw(20) << "Galutinis (Vid.)"
+        << right << setw(20) << "Galutinis (Med.)" << '\n';
+    fout << string(75, '-') << '\n';
+
+    for (const auto& st : Grupe) {
+        fout << left << setw(15) << st.var
+            << left << setw(20) << st.pav
+            << right << setw(20) << fixed << setprecision(2) << st.galVid
+            << right << setw(20) << fixed << setprecision(2) << st.galMed
+            << '\n';
+    }
+}
+
+void GeneruotiFaila() {
+    int n;
+    cout << "Iveskite studentu kieki: ";
+    cin >> n;
+
+    string filename = "studentai" + to_string(n) + ".txt";
+    ofstream fout(filename);
+    if (!fout) {
+        cerr << "Nepavyko sukurti failo!\n";
+        return;
+    }
+
+    srand(time(0));
+
+    fout << left << setw(15) << "Vardas" << setw(15) << "Pavarde";
+    for (int i = 1; i <= 15; i++)
+        fout << left << setw(6) << ("ND" + to_string(i));
+    fout << left << setw(6) << "Egz." << endl;
+
+    for (int i = 1; i <= n; i++) {
+        fout << left << setw(15) << ("Vardas" + to_string(i))
+            << left << setw(15) << ("Pavarde" + to_string(i));
+        for (int j = 0; j < 15; j++)
+            fout << left << setw(6) << (rand() % 10 + 1);
+        fout << left << setw(6) << (rand() % 10 + 1) << endl;
+    }
+
+    cout << "Failas '" << filename << "' sugeneruotas.\n";
 }

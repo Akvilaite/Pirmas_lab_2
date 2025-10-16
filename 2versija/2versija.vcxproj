@@ -18,6 +18,17 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="failai.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="rusiavimas.cpp" />
+    <ClCompile Include="studentas.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="failai.h" />
+    <ClInclude Include="rusiavimas.h" />
+    <ClInclude Include="studentas.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -122,9 +133,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="2versija.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

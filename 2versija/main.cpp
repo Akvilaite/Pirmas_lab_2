@@ -1,8 +1,7 @@
 ﻿#include <iostream>
-#include <algorithm>
+#include <vector>
 #include "studentas.h"
 #include "failai.h"
-#include "rezultatai.h"
 #include "rusiavimas.h"
 
 using namespace std;
@@ -11,66 +10,63 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    srand(static_cast<unsigned>(time(0)));
-
     vector<Studentas> Grupe;
+    srand(time(0));
 
     int budas;
-    cout << "Pasirinkite pazymiu ivedimo buda:\n";
-    cout << "1 - zinomas pazymiu skaicius\n";
-    cout << "2 - nezinomas pazymiu skaicius (baigti ENTER x2)\n";
-    cout << "3 - generuoti pazymius ir egzamina\n";
-    cout << "4 - nuskaityti duomenis is failo\n";
-    while (!(cin >> budas) || budas < 1 || budas > 4) {
-        cout << "Neteisingas pasirinkimas. Bandykite dar karta: ";
+    cout << "Pasirinkite veiksma:\n";
+    cout << "1 - Zinomas pazymiu skaicius\n";
+    cout << "2 - Nezinomas pazymiu skaicius (ENTER x2)\n";
+    cout << "3 - Generuoti pazymius\n";
+    cout << "4 - Nuskaityti duomenis is failo\n";
+    cout << "5 - Sugeneruoti nauja faila\n";
+    while (!(cin >> budas) || budas < 1 || budas > 5) {
+        cout << "Neteisingas pasirinkimas: ";
         cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.ignore(10000, '\n');
+    }
+
+    if (budas == 5) {
+        GeneruotiFaila();
+        return 0;
     }
 
     if (budas == 4) {
-        string failoVardas = "studentai.txt"; 
-        Grupe = Stud_from_file(failoVardas);
+        string fname;
+        cout << "Iveskite failo pavadinima: ";
+        cin >> fname;
+        Grupe = Stud_from_file(fname);
     }
     else {
+        int n;
         cout << "Kiek studentu grupeje: ";
-        int m;
-        while (!(cin >> m) || m <= 0) {
-            cout << "Netinkamas skaicius. Bandykite dar karta: ";
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        }
-
-        for (int z = 0; z < m; ++z)
+        cin >> n;
+        for (int i = 0; i < n; ++i)
             Grupe.push_back(Stud_iv(budas));
     }
 
-    sort(Grupe.begin(), Grupe.end(), [](const Studentas& a, const Studentas& b) {
-        if (a.var == b.var)
-            return a.pav < b.pav;
-        return a.var < b.var;
-        });
+    if (Grupe.empty()) {
+        cout << "Nerasta duomenu!\n";
+        return 0;
+    }
+
+    Rikiuoti(Grupe);
 
     int kriterijus;
     cout << "\nPasirinkite kriteriju studentu dalinimui:\n";
-    cout << "1 - pagal vidurki (galVid)\n";
-    cout << "2 - pagal mediana (galMed)\n";
-    while (!(cin >> kriterijus) || (kriterijus != 1 && kriterijus != 2)) {
-        cout << "Neteisingas pasirinkimas. Bandykite dar karta: ";
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "1 - Pagal vidurki\n";
+    cout << "2 - Pagal mediana\n";
+    cin >> kriterijus;
+
+    vector<Studentas> vargsiukai, kietiakiai;
+    for (const auto& st : Grupe) {
+        double val = (kriterijus == 1 ? st.galVid : st.galMed);
+        if (val < 5.0) vargsiukai.push_back(st);
+        else kietiakiai.push_back(st);
     }
-
-    vector<Studentas> vargsiukai;
-    vector<Studentas> kietiakiai;
-
-    Rusiavimas(Grupe, vargsiukai, kietiakiai, kriterijus);
 
     Spausdinti(vargsiukai, "vargsiukai.txt");
     Spausdinti(kietiakiai, "kietiakiai.txt");
-
-    cout << "Rezultatai issaugoti i failus: vargsiukai.txt ir kietiakiai.txt\n";
-    cout << "Vargsiuku skaicius: " << vargsiukai.size()
-        << ", Kietiakiu skaicius: " << kietiakiai.size() << "\n";
-
+    cout << "Rezultatai issaugoti i failus.\n";
     return 0;
 }

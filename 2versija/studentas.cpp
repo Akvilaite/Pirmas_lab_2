@@ -15,8 +15,7 @@ Studentas Stud_iv(int budas) {
     cout << "Pavarde: ";
     cin >> st.pav;
 
-    int sum = 0;
-    int n = 0;
+    int sum = 0, n = 0;
 
     if (budas == 1) {
         cout << "Kiek pazymiu turi " << st.var << " " << st.pav << ": ";
@@ -70,6 +69,7 @@ Studentas Stud_iv(int budas) {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
 
+        srand(time(0));
         for (int i = 0; i < n; i++) {
             int laik = rand() % 10 + 1;
             st.paz.push_back(laik);
@@ -94,9 +94,9 @@ Studentas Stud_iv(int budas) {
     if (n > 0) {
         st.galVid = double(sum) / n * 0.4 + st.egz * 0.6;
         sort(st.paz.begin(), st.paz.end());
-        double med = (n % 2 == 0) ?
-            (st.paz[n / 2 - 1] + st.paz[n / 2]) / 2.0 :
-            st.paz[n / 2];
+        double med = (n % 2 == 0)
+            ? (st.paz[n / 2 - 1] + st.paz[n / 2]) / 2.0
+            : st.paz[n / 2];
         st.galMed = med * 0.4 + st.egz * 0.6;
     }
     else {
