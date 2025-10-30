@@ -1,6 +1,8 @@
 ﻿#include <iostream>
 #include <vector>
+#include <list>
 #include <chrono>
+#include <type_traits>
 #include "studentas.h"
 #include "failai.h"
 #include "rusiavimas.h"
@@ -8,18 +10,17 @@
 using namespace std;
 using namespace std::chrono;
 
-int main() {
-    ios::sync_with_stdio(false);
-
-    // 🕒 Bendro veikimo pradžia
+// Bendrinė šabloninė funkcija, kur visa logika
+template <typename Container>
+void VykdytiPrograma() {
     auto startProgram = high_resolution_clock::now();
-
-    vector<Studentas> Grupe;
     srand(time(0));
 
     double failoLaikas = 0.0;
     double rusiavimoLaikas = 0.0;
     double isvedimoLaikas = 0.0;
+
+    Container Grupe;
 
     int budas;
     cout << "Pasirinkite veiksma:\n";
@@ -37,17 +38,16 @@ int main() {
 
     if (budas == 5) {
         GeneruotiFaila();
-        return 0;
+        return;
     }
 
-    // === 1. FAILO NUSKAITYMO LAIKAS ===
     if (budas == 4) {
         string fname;
         cout << "Iveskite failo pavadinima: ";
         cin >> fname;
 
         auto start = high_resolution_clock::now();
-        Grupe = Stud_from_file(fname);
+        Grupe = Stud_from_file<Container>(fname);
         auto end = high_resolution_clock::now();
 
         failoLaikas = duration_cast<duration<double>>(end - start).count();
@@ -62,12 +62,10 @@ int main() {
 
     if (Grupe.empty()) {
         cout << "Nerasta duomenu!\n";
-        return 0;
+        return;
     }
 
-    // === 2. RUSIAVIMO LAIKAS ===
     auto startR = high_resolution_clock::now();
-
     Rikiuoti(Grupe);
 
     int kriterijus;
@@ -76,7 +74,7 @@ int main() {
     cout << "2 - Pagal mediana\n";
     cin >> kriterijus;
 
-    vector<Studentas> vargsiukai, kietiakiai;
+    Container vargsiukai, kietiakiai;
     for (const auto& st : Grupe) {
         double val = (kriterijus == 1 ? st.galVid : st.galMed);
         if (val < 5.0) vargsiukai.push_back(st);
@@ -86,7 +84,6 @@ int main() {
     auto endR = high_resolution_clock::now();
     rusiavimoLaikas = duration_cast<duration<double>>(endR - startR).count();
 
-    // === 3. ISVEDIMO LAIKAS ===
     auto startI = high_resolution_clock::now();
     Spausdinti(vargsiukai, "vargsiukai.txt");
     Spausdinti(kietiakiai, "kietiakiai.txt");
@@ -94,10 +91,9 @@ int main() {
 
     isvedimoLaikas = duration_cast<duration<double>>(endI - startI).count();
 
-    // 🕒 Bendro veikimo pabaiga
-    double bendrasLaikas = failoLaikas+rusiavimoLaikas+isvedimoLaikas;
+    auto endProgram = high_resolution_clock::now();
+    double bendrasLaikas = duration_cast<duration<double>>(endProgram - startProgram).count();
 
-    // === 4. ISVEDIMAS PABAIGOJE ===
     cout << "\n===== LAIKO MATAVIMAI =====\n";
     cout << "Failo nuskaitymo laikas: " << failoLaikas << " s\n";
     cout << "Rusiavimo i vargsiukus/kietiakus laikas: " << rusiavimoLaikas << " s\n";
@@ -105,7 +101,31 @@ int main() {
     cout << "---------------------------------\n";
     cout << "Bendras programos veikimo laikas: " << bendrasLaikas << " s\n";
     cout << "===========================\n";
+}
 
-    cout << "\nRezultatai issaugoti i failus.\n";
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    cout << "Pasirinkite konteineri:\n";
+    cout << "1 - std::vector\n";
+    cout << "2 - std::list\n";
+
+    int pasirinkimas;
+    while (!(cin >> pasirinkimas) || pasirinkimas < 1 || pasirinkimas > 2) {
+        cout << "Neteisingas pasirinkimas. Bandykite dar karta: ";
+        cin.clear();
+        cin.ignore(10000, '\n');
+    }
+
+    if (pasirinkimas == 1) {
+        cout << "\nNaudojamas konteineris: std::vector\n";
+        VykdytiPrograma<vector<Studentas>>();
+    }
+    else {
+        cout << "\nNaudojamas konteineris: std::list\n";
+        VykdytiPrograma<list<Studentas>>();
+    }
+
     return 0;
 }
