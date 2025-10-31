@@ -1,14 +1,16 @@
-# V03 specifikacijos ir vidurkiai
-
-# V03 vidurkiai
+# V03 specifikacijos:
 
 <pre>
 CPU Intel Core i9-12900H, 12-oji karta, 14 branduolių (6 P + 8 E), 20 gijų, 2.5 GHz bazinis dažnis, iki 5.0 GHz
 RAM 16 GB DDR5-4800 MHz, 2× 8 GB 
 SSD - 1 TB PCIe Gen 4 NVMe M.2 SSD 
-
-Vidurkiai:
+<pre>
   
+#Vidurkiai: 
+  
+<pre>  
+su 1000 eilučių greičiau veikė listai, o su 10 000 000 eilučių - vektoriai. Testuota buvo po 3 kartus skirtingais laikais.
+
 Vektoriai:                                List'ai:
 Su 1000:                                  Su 1000:
 Failo nuskaitymas     0.01135             Failo nuskaitymas     0.00804
