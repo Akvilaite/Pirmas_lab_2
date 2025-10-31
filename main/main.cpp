@@ -104,14 +104,14 @@ int main() {
         cin.ignore(10000, '\n');
     }
 
-    vector<Studentas> vargsiukai, kietiakiai;
+    vector<Studentas> vargsiukai, kietiakai;
 
     if (konteinerisTipas == 1) {
         Rikiuoti(vGrupe);
         for (const auto& st : vGrupe) {
             double val = (kriterijus == 1 ? st.galVid : st.galMed);
             if (val < 5.0) vargsiukai.push_back(st);
-            else kietiakiai.push_back(st);
+            else kietiakai.push_back(st);
         }
     }
     else {
@@ -119,7 +119,7 @@ int main() {
         for (const auto& st : lGrupe) {
             double val = (kriterijus == 1 ? st.galVid : st.galMed);
             if (val < 5.0) vargsiukai.push_back(st);
-            else kietiakiai.push_back(st);
+            else kietiakai.push_back(st);
         }
     }
 
@@ -128,7 +128,7 @@ int main() {
 
     auto startI = high_resolution_clock::now();
     Spausdinti(vargsiukai, "vargsiukai.txt");
-    Spausdinti(kietiakiai, "kietiakiai.txt");
+    Spausdinti(kietiakai, "kietiakai.txt");
     auto endI = high_resolution_clock::now();
     isvedimoLaikas = duration_cast<duration<double>>(endI - startI).count();
 
