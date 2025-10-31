@@ -1,8 +1,7 @@
 # V03 vidurkiai
-# Pirmas_lab_2
 
-Vektoriai                                 List'ai
--------------------------------------     -------------------------------------
+<pre>
+Vektoriai:                                List'ai:
 Su 1000:                                  Su 1000:
 Failo nuskaitymas     0.01135             Failo nuskaitymas     0.00804
 Rūšiavimas ir skirstymas  1.85156         Rūšiavimas ir skirstymas  1.56665
@@ -36,3 +35,4 @@ Failo nuskaitymas     74.8043             Failo nuskaitymas     76.347
 Rūšiavimas ir skirstymas  18.0287         Rūšiavimas ir skirstymas  22.384
 Rezultatų išvedimas   21.3821             Rezultatų išvedimas   21.331
 Bendras laikas        114.215             Bendras laikas        120.063
+</pre>
