@@ -1,4 +1,4 @@
-#include "failai.h"
+﻿#include "failai.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -18,7 +18,7 @@ vector<Studentas> Stud_from_file(const string& fname) {
     }
 
     string eilute;
-    getline(fd, eilute); //praleidziam antraste
+    getline(fd, eilute);
 
     while (getline(fd, eilute)) {
         if (eilute.empty()) continue;
@@ -52,14 +52,15 @@ vector<Studentas> Stud_from_file(const string& fname) {
     return grupe;
 }
 
-void Spausdinti(const vector<Studentas>& Grupe, const string& out_file) {
+template <typename Container>
+void Spausdinti(const Container& Grupe, const string& out_file) {
     ofstream fout(out_file);
     if (!fout) return;
 
     fout << left << setw(15) << "Vardas"
         << left << setw(20) << "Pavarde"
         << right << setw(20) << "Galutinis (Vid.)"
-        << right << setw(20) << "Galutinis (Med.)" << '\n'; 
+        << right << setw(20) << "Galutinis (Med.)" << '\n';
     fout << string(75, '-') << '\n';
 
     for (const auto& st : Grupe) {
@@ -70,6 +71,9 @@ void Spausdinti(const vector<Studentas>& Grupe, const string& out_file) {
             << '\n';
     }
 }
+
+template void Spausdinti(const vector<Studentas>&, const string&);
+template void Spausdinti(const list<Studentas>&, const string&);
 
 void GeneruotiFaila() {
     int n;
@@ -83,7 +87,7 @@ void GeneruotiFaila() {
         return;
     }
 
-    srand(time(0));
+    srand(static_cast<unsigned int>(time(nullptr)));
 
     fout << left << setw(15) << "Vardas" << setw(15) << "Pavarde";
     for (int i = 1; i <= 15; i++)
@@ -100,3 +104,4 @@ void GeneruotiFaila() {
 
     cout << "Failas '" << filename << "' sugeneruotas.\n";
 }
+

@@ -1,13 +1,13 @@
-#pragma once
-#ifndef FAILAI_H
-#define FAILAI_H
-
+﻿#pragma once
+#include "studentas.h"
 #include <string>
 #include <vector>
-#include "studentas.h"
+#include <list>
 
 std::vector<Studentas> Stud_from_file(const std::string& fname);
-void Spausdinti(const std::vector<Studentas>& Grupe, const std::string& out_file);
+
+template <typename Container>
+void Spausdinti(const Container& Grupe, const std::string& out_file);
+
 void GeneruotiFaila();
 
-#endif

@@ -1,10 +1,7 @@
-#pragma once
-#ifndef RUSIAVIMAS_H
-#define RUSIAVIMAS_H
-
-#include <vector>
+﻿#pragma once
 #include "studentas.h"
+#include <vector>
+#include <list>
 
-void Rikiuoti(std::vector<Studentas>& Grupe);
-
-#endif
+template <typename Container>
+void Rikiuoti(Container& Grupe);
