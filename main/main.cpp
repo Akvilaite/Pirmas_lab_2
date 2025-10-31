@@ -78,16 +78,13 @@ int main() {
 
         for (int i = 0; i < n; ++i) {
             Studentas st = Stud_iv(budas);
-            if (budas != 4) {
-                cout << "Objekto saugojimo adresas (laikinas objektas): " << &st << "\n";
-            }
+            cout << "Objekto saugojimo adresas (laikinas objektas): " << &st << "\n";
 
             if (konteinerisTipas == 1)
                 vGrupe.push_back(st);
             else
                 lGrupe.push_back(st);
         }
-
     }
 
     if ((konteinerisTipas == 1 && vGrupe.empty()) || (konteinerisTipas == 2 && lGrupe.empty())) {
@@ -147,15 +144,17 @@ int main() {
 
     cout << "\nRezultatai issaugoti i failus.\n";
 
-    cout << "\n===== OBJEKTŲ ADRESAI KONTEINERYJE =====\n";
-    if (konteinerisTipas == 1) {
-        for (const auto& st : vGrupe) {
-            cout << "Vector objektas: " << &st << "\n";
+    if (budas != 4) {
+        cout << "\n===== OBJEKTU ADRESAI KONTEINERYJE =====\n";
+        if (konteinerisTipas == 1) {
+            for (const auto& st : vGrupe) {
+                cout << "Vector objektas: " << &st << "\n";
+            }
         }
-    }
-    else {
-        for (const auto& st : lGrupe) {
-            cout << "List objektas: " << &st << "\n";
+        else {
+            for (const auto& st : lGrupe) {
+                cout << "List objektas: " << &st << "\n";
+            }
         }
     }
 
