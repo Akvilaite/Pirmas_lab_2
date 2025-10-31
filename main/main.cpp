@@ -78,13 +78,16 @@ int main() {
 
         for (int i = 0; i < n; ++i) {
             Studentas st = Stud_iv(budas);
-            cout << "Objekto saugojimo adresas (laikinas objektas): " << &st << "\n";
+            if (budas != 4) {
+                cout << "Objekto saugojimo adresas (laikinas objektas): " << &st << "\n";
+            }
 
             if (konteinerisTipas == 1)
                 vGrupe.push_back(st);
             else
                 lGrupe.push_back(st);
         }
+
     }
 
     if ((konteinerisTipas == 1 && vGrupe.empty()) || (konteinerisTipas == 2 && lGrupe.empty())) {
