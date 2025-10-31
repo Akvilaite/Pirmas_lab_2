@@ -143,6 +143,18 @@ int main() {
     cout << "===========================\n";
 
     cout << "\nRezultatai issaugoti i failus.\n";
+
+    cout << "\n===== OBJEKTŲ ADRESAI KONTEINERYJE =====\n";
+    if (konteinerisTipas == 1) {
+        for (const auto& st : vGrupe) {
+            cout << "Vector objektas: " << &st << "\n";
+        }
+    }
+    else {
+        for (const auto& st : lGrupe) {
+            cout << "List objektas: " << &st << "\n";
+        }
+    }
+
     return 0;
 }
-
