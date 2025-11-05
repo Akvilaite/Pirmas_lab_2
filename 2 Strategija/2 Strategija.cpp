@@ -78,8 +78,6 @@ int main() {
 
         for (int i = 0; i < n; ++i) {
             Studentas st = Stud_iv(budas);
-            cout << "Objekto saugojimo adresas (laikinas objektas): " << &st << "\n";
-
             if (konteinerisTipas == 1)
                 vGrupe.push_back(st);
             else
@@ -105,7 +103,7 @@ int main() {
     if (konteinerisTipas == 1) {
         vector<Studentas> vargsiukai;
 
-        Rikiuoti(vGrupe); // rūšiavimas vyksta, bet nematuojamas
+        Rikiuoti(vGrupe);
 
         auto startR = high_resolution_clock::now();
         Strategija2(vGrupe, vargsiukai, kriterijus);
@@ -121,7 +119,7 @@ int main() {
     else {
         list<Studentas> vargsiukai;
 
-        Rikiuoti(lGrupe); // rūšiavimas vyksta, bet nematuojamas
+        Rikiuoti(lGrupe);
 
         auto startR = high_resolution_clock::now();
         Strategija2(lGrupe, vargsiukai, kriterijus);

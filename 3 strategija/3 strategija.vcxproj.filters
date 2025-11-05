@@ -18,5 +18,22 @@
     <ClCompile Include="3 strategija.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="failai.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="studentas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="failai.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rusiavimas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="studentas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

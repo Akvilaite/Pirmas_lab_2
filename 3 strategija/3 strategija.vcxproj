@@ -124,6 +124,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3 strategija.cpp" />
+    <ClCompile Include="failai.cpp" />
+    <ClCompile Include="studentas.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="failai.h" />
+    <ClInclude Include="rusiavimas.h" />
+    <ClInclude Include="studentas.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
