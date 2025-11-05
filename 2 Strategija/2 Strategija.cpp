@@ -102,33 +102,35 @@ int main() {
         cin.ignore(10000, '\n');
     }
 
-    auto startR = high_resolution_clock::now();
-
     if (konteinerisTipas == 1) {
         vector<Studentas> vargsiukai;
-        Rikiuoti(vGrupe);
-        Strategija2(vGrupe, vargsiukai, kriterijus);
 
+        Rikiuoti(vGrupe); // rūšiavimas vyksta, bet nematuojamas
+
+        auto startR = high_resolution_clock::now();
+        Strategija2(vGrupe, vargsiukai, kriterijus);
         auto endR = high_resolution_clock::now();
         rusiavimoLaikas = duration_cast<duration<double>>(endR - startR).count();
 
         auto startI = high_resolution_clock::now();
         Spausdinti(vargsiukai, "vargsiukai.txt");
-        if (budas == 4) Spausdinti(vGrupe, fname); // perrašome failą tik jei buvo nuskaitytas
+        if (budas == 4) Spausdinti(vGrupe, fname);
         auto endI = high_resolution_clock::now();
         isvedimoLaikas = duration_cast<duration<double>>(endI - startI).count();
     }
     else {
         list<Studentas> vargsiukai;
-        Rikiuoti(lGrupe);
-        Strategija2(lGrupe, vargsiukai, kriterijus);
 
+        Rikiuoti(lGrupe); // rūšiavimas vyksta, bet nematuojamas
+
+        auto startR = high_resolution_clock::now();
+        Strategija2(lGrupe, vargsiukai, kriterijus);
         auto endR = high_resolution_clock::now();
         rusiavimoLaikas = duration_cast<duration<double>>(endR - startR).count();
 
         auto startI = high_resolution_clock::now();
         Spausdinti(vargsiukai, "vargsiukai.txt");
-        if (budas == 4) Spausdinti(lGrupe, fname); 
+        if (budas == 4) Spausdinti(lGrupe, fname);
         auto endI = high_resolution_clock::now();
         isvedimoLaikas = duration_cast<duration<double>>(endI - startI).count();
     }
@@ -137,8 +139,8 @@ int main() {
 
     cout << "\n===== LAIKO MATAVIMAI =====\n";
     cout << "Failo nuskaitymo laikas: " << failoLaikas << " s\n";
-    cout << "Rusiavimo ir skirstymo laikas: " << rusiavimoLaikas << " s\n";
-    cout << "Rezultatu isvedimo i failus laikas: " << isvedimoLaikas << " s\n";
+    cout << "Skirstymo i vargsiukus laikas: " << rusiavimoLaikas << " s\n";
+    cout << "Rezultatu isvedimo i faila laikas: " << isvedimoLaikas << " s\n";
     cout << "---------------------------------\n";
     cout << "Bendras programos veikimo laikas: " << bendrasLaikas << " s\n";
     cout << "===========================\n";
