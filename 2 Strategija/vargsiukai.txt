@@ -1,5 +1,0 @@
-Vardas         Pavarde                 Galutinis (Vid.)    Galutinis (Med.)
----------------------------------------------------------------------------
-Vardas         Pavarde                             1.00                1.00
-Vardas         Pavarde                             1.00                1.00
-Vardas         Pavarde                             1.00                1.00
