@@ -21,9 +21,6 @@
     <ClCompile Include="failai.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="rusiavimas.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="studentas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

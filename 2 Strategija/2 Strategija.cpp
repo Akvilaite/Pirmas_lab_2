@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include <list>
 #include <chrono>
@@ -92,8 +92,6 @@ int main() {
         return 0;
     }
 
-    auto startR = high_resolution_clock::now();
-
     int kriterijus;
     cout << "\nPasirinkite kriteriju studentu dalinimui:\n";
     cout << "1 - Pagal vidurki\n";
@@ -104,33 +102,38 @@ int main() {
         cin.ignore(10000, '\n');
     }
 
-    vector<Studentas> vargsiukai, kietiakai;
+    auto startR = high_resolution_clock::now();
 
     if (konteinerisTipas == 1) {
+        vector<Studentas> vargsiukai, kietiakai;
         Rikiuoti(vGrupe);
-        for (const auto& st : vGrupe) {
-            double val = (kriterijus == 1 ? st.galVid : st.galMed);
-            if (val < 5.0) vargsiukai.push_back(st);
-            else kietiakai.push_back(st);
-        }
+        Strategija2(vGrupe, vargsiukai, kriterijus);
+        kietiakai = vGrupe;
+
+        auto endR = high_resolution_clock::now();
+        rusiavimoLaikas = duration_cast<duration<double>>(endR - startR).count();
+
+        auto startI = high_resolution_clock::now();
+        Spausdinti(vargsiukai, "vargsiukai.txt");
+        Spausdinti(kietiakai, "kietiakai.txt");
+        auto endI = high_resolution_clock::now();
+        isvedimoLaikas = duration_cast<duration<double>>(endI - startI).count();
     }
     else {
+        list<Studentas> vargsiukai, kietiakai;
         Rikiuoti(lGrupe);
-        for (const auto& st : lGrupe) {
-            double val = (kriterijus == 1 ? st.galVid : st.galMed);
-            if (val < 5.0) vargsiukai.push_back(st);
-            else kietiakai.push_back(st);
-        }
+        Strategija2(lGrupe, vargsiukai, kriterijus);
+        kietiakai = lGrupe;
+
+        auto endR = high_resolution_clock::now();
+        rusiavimoLaikas = duration_cast<duration<double>>(endR - startR).count();
+
+        auto startI = high_resolution_clock::now();
+        Spausdinti(vargsiukai, "vargsiukai.txt");
+        Spausdinti(kietiakai, "kietiakai.txt");
+        auto endI = high_resolution_clock::now();
+        isvedimoLaikas = duration_cast<duration<double>>(endI - startI).count();
     }
-
-    auto endR = high_resolution_clock::now();
-    rusiavimoLaikas = duration_cast<duration<double>>(endR - startR).count();
-
-    auto startI = high_resolution_clock::now();
-    Spausdinti(vargsiukai, "vargsiukai.txt");
-    Spausdinti(kietiakai, "kietiakai.txt");
-    auto endI = high_resolution_clock::now();
-    isvedimoLaikas = duration_cast<duration<double>>(endI - startI).count();
 
     double bendrasLaikas = failoLaikas + rusiavimoLaikas + isvedimoLaikas;
 
