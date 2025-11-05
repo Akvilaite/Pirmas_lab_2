@@ -51,9 +51,9 @@ int main() {
 
     vector<Studentas> vGrupe;
     list<Studentas> lGrupe;
+    string fname;
 
     if (budas == 4) {
-        string fname;
         cout << "Iveskite failo pavadinima: ";
         cin >> fname;
 
@@ -105,32 +105,30 @@ int main() {
     auto startR = high_resolution_clock::now();
 
     if (konteinerisTipas == 1) {
-        vector<Studentas> vargsiukai, kietiakai;
+        vector<Studentas> vargsiukai;
         Rikiuoti(vGrupe);
         Strategija2(vGrupe, vargsiukai, kriterijus);
-        kietiakai = vGrupe;
 
         auto endR = high_resolution_clock::now();
         rusiavimoLaikas = duration_cast<duration<double>>(endR - startR).count();
 
         auto startI = high_resolution_clock::now();
         Spausdinti(vargsiukai, "vargsiukai.txt");
-        Spausdinti(kietiakai, "kietiakai.txt");
+        if (budas == 4) Spausdinti(vGrupe, fname); // perrašome failą tik jei buvo nuskaitytas
         auto endI = high_resolution_clock::now();
         isvedimoLaikas = duration_cast<duration<double>>(endI - startI).count();
     }
     else {
-        list<Studentas> vargsiukai, kietiakai;
+        list<Studentas> vargsiukai;
         Rikiuoti(lGrupe);
         Strategija2(lGrupe, vargsiukai, kriterijus);
-        kietiakai = lGrupe;
 
         auto endR = high_resolution_clock::now();
         rusiavimoLaikas = duration_cast<duration<double>>(endR - startR).count();
 
         auto startI = high_resolution_clock::now();
         Spausdinti(vargsiukai, "vargsiukai.txt");
-        Spausdinti(kietiakai, "kietiakai.txt");
+        if (budas == 4) Spausdinti(lGrupe, fname); 
         auto endI = high_resolution_clock::now();
         isvedimoLaikas = duration_cast<duration<double>>(endI - startI).count();
     }
@@ -145,21 +143,8 @@ int main() {
     cout << "Bendras programos veikimo laikas: " << bendrasLaikas << " s\n";
     cout << "===========================\n";
 
-    cout << "\nRezultatai issaugoti i failus.\n";
-
-    if (budas != 4) {
-        cout << "\n===== OBJEKTU ADRESAI KONTEINERYJE =====\n";
-        if (konteinerisTipas == 1) {
-            for (const auto& st : vGrupe) {
-                cout << "Vector objektas: " << &st << "\n";
-            }
-        }
-        else {
-            for (const auto& st : lGrupe) {
-                cout << "List objektas: " << &st << "\n";
-            }
-        }
-    }
+    cout << "\nRezultatai issaugoti i faila: vargsiukai.txt\n";
+    if (budas == 4) cout << "Atnaujintas failas: " << fname << " (liko tik kietiakai)\n";
 
     return 0;
 }

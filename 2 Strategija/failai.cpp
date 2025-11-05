@@ -57,7 +57,7 @@ void GeneruotiFaila() {
     cout << "Iveskite studentu kieki: ";
     cin >> n;
 
-    string filename = "studentai" + to_string(n) + ".txt";
+    string filename = "stud" + to_string(n) + ".txt";
     ofstream fout(filename);
     if (!fout) {
         cerr << "Nepavyko sukurti failo!\n";
