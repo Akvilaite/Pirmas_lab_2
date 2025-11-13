@@ -12,7 +12,8 @@ SSD - 1 TB PCIe Gen 4 NVMe M.2 SSD
 1. Atsisiųsti v1.0 release failus
 2. atsidarius Pirmas_lab_2 pasirinkti, kurią strategiją naudosime.
 3. Atidaryti .sln failą per Visual studio
-4. paleisti programą Realease x64 metodu.
+4. rekomenduoju naudoti c++17 versiją
+5. paleisti programą Realease x64 metodu.
    
 Paleidus programą:
 Pasirinkite, ar norite įvesti duomenis ranka, ar nuskaityti iš failo.
