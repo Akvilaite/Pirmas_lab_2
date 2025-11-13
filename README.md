@@ -5,11 +5,35 @@ CPU Intel Core i9-12900H, 12-oji karta, 14 branduolių (6 P + 8 E), 20 gijų, 2.
 RAM 16 GB DDR5-4800 MHz, 2× 8 GB 
 SSD - 1 TB PCIe Gen 4 NVMe M.2 SSD 
 <pre>
+
+
+# programos paleidimas
+</pre>
+1. Atsisiųsti v1.0 release failus
+2. atsidarius Pirmas_lab_2 pasirinkti, kurią strategiją naudosime.
+3. Atidaryti .sln failą per Visual studio
+4. paleisti programą Realease x64 metodu.
+   
+Paleidus programą:
+Pasirinkite, ar norite įvesti duomenis ranka, ar nuskaityti iš failo.
+Įveskite studentų duomenis (vardas, pavardė, pažymiai, egzaminas).
+Programa automatiškai:
+suskaičiuos vidurkius ir medianas,
+išrūšiuos studentus pagal pasirinktą strategiją (pvz. 3 strategija),
+atskirs „vargšiukus“,
+išves rezultatus ekrane ir į failus.
+</pre>
   
 #Vidurkiai: 
   
 <pre>  
-su 1000 eilučių greičiau veikė listai, o su 10 000 000 eilučių - vektoriai. Testuota buvo po 3 kartus skirtingais laikais.
+Bendros įžvalgos
+2strategija buvo greitesnė už 1.
+Su mažais duomenų kiekiais (1000 eilučių) greičiau veikė list konteineris.
+
+Su labai dideliais duomenų kiekiais (10 000 000 eilučių) efektyvesnis buvo vector konteineris.
+
+Tai rodo, kad konteinerio pasirinkimas priklauso nuo duomenų masto: list pranašesnis mažesnėse apimtose, vector – didelėse.
 
 
 # Pirmas_lab_2
