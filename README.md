@@ -23,8 +23,9 @@ arba
 cd build
 4.toliau: cmake ..
 5. įvykdome kompiliaciją:cmake --build . --config Release
-6. visą kodą galime paleisti: ./3_strategija
-   testavimą su: ./testavimas
+6. pereiti 5 release: cd .\Release
+7. visą kodą galime paleisti: ./3_strategija.exe
+   testavimą su: ./testavimas.exe
 
 
 
