@@ -20,14 +20,12 @@ set(SOURCES_MAIN
     "3 strategija.cpp"
     studentas.cpp
     failai.cpp
-    rusiavimas.cpp
 )
 
 # Testavimo programos failai
 set(SOURCES_TEST
     studentas.cpp
     failai.cpp
-    rusiavimas.cpp
     testavimas.cpp
 )
 
