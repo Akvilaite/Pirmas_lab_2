@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <vector>
 #include <list>
 #include <chrono>
@@ -90,22 +90,6 @@ int main() {
         return 0;
     }
 
-    if (konteinerisTipas == 1) {
-        std::transform(vGrupe.begin(), vGrupe.end(), vGrupe.begin(), [](Studentas& s) {
-            s.galVid = SkaiciuotiVidurki(s.namuDarbai);
-            s.galMed = SkaiciuotiMediana(s.namuDarbai);
-            return s;
-            });
-    }
-    else {
-        std::transform(lGrupe.begin(), lGrupe.end(), lGrupe.begin(), [](Studentas& s) {
-            s.galVid = SkaiciuotiVidurki(s.namuDarbai);
-            s.galMed = SkaiciuotiMediana(s.namuDarbai);
-            return s;
-            });
-    }
-
-
     int kriterijus;
     cout << "\nPasirinkite kriteriju studentu dalinimui:\n";
     cout << "1 - Pagal vidurki\n";
@@ -122,7 +106,7 @@ int main() {
         Rikiuoti(vGrupe);
 
         auto startR = high_resolution_clock::now();
-        Strategija3(vGrupe, vargsiukai, kriterijus);
+        Strategija2(vGrupe, vargsiukai, kriterijus);
         auto endR = high_resolution_clock::now();
         rusiavimoLaikas = duration_cast<duration<double>>(endR - startR).count();
 
@@ -138,7 +122,7 @@ int main() {
         Rikiuoti(lGrupe);
 
         auto startR = high_resolution_clock::now();
-        Strategija3(lGrupe, vargsiukai, kriterijus);
+        Strategija2(lGrupe, vargsiukai, kriterijus);
         auto endR = high_resolution_clock::now();
         rusiavimoLaikas = duration_cast<duration<double>>(endR - startR).count();
 

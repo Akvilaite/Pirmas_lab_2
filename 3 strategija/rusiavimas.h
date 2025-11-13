@@ -53,12 +53,28 @@ void Rikiuoti(Container& Grupe) {
 }
 
 template <typename Container>
-void Strategija3(Container& studentai, Container& vargsiukai, int kriterijus) {
-    auto it = std::partition(studentai.begin(), studentai.end(), [&](const Studentas& s) {
-        double val = (kriterijus == 1 ? s.galVid : s.galMed);
-        return val < 5.0;
-        });
-
-    vargsiukai.insert(vargsiukai.end(), studentai.begin(), it);
-    studentai.erase(studentai.begin(), it);
+void Strategija2(Container& studentai, Container& vargsiukai, int kriterijus) {
+    if constexpr (std::is_same<Container, std::vector<Studentas>>::value) {
+        auto it = std::remove_if(studentai.begin(), studentai.end(), [&](const Studentas& s) {
+            double val = (kriterijus == 1 ? s.galVid : s.galMed);
+            if (val < 5.0) {
+                vargsiukai.push_back(s);
+                return true;
+            }
+            return false;
+            });
+        studentai.erase(it, studentai.end());
+    }
+    else {
+        for (auto it = studentai.begin(); it != studentai.end(); ) {
+            double val = (kriterijus == 1 ? it->galVid : it->galMed);
+            if (val < 5.0) {
+                vargsiukai.push_back(*it);
+                it = studentai.erase(it);
+            }
+            else {
+                ++it;
+            }
+        }
+    }
 }
