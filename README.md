@@ -14,7 +14,21 @@ SSD - 1 TB PCIe Gen 4 NVMe M.2 SSD
 3. Atidaryti .sln failą per Visual studio
 4. rekomenduoju naudoti c++17 versiją
 5. paleisti programą Realease x64 metodu.
-   
+
+arba
+
+1. Atsidarykite terminalą (arba „Developer PowerShell“ jei naudojate Visual Studio).
+2. įrašykite: cd "3 strategijos folderio išsaugojimo vieta"
+3. toliau: mkdir build
+cd build
+4.toliau: cmake ..
+5. įvykdome kompiliaciją:cmake --build . --config Release
+6. visą kodą galime paleisti: ./3_strategija
+   testavimą su: ./testavimas
+
+
+
+
 Paleidus programą:
 Pasirinkite, ar norite įvesti duomenis ranka, ar nuskaityti iš failo.
 Įveskite studentų duomenis (vardas, pavardė, pažymiai, egzaminas).
