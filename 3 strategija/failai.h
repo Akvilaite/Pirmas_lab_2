@@ -5,26 +5,25 @@
 #include <list>
 #include <fstream>
 #include <iomanip>
+using namespace std;
 
-std::vector<Studentas> Stud_from_file(const std::string& fname);
+vector<Studentas> Stud_from_file(const string& fname);
 void GeneruotiFaila();
 
 template <typename Container>
-void Spausdinti(const Container& Grupe, const std::string& out_file) {
-    std::ofstream fout(out_file);
+void Spausdinti(const Container& Grupe, const string& out_file) {
+    ofstream fout(out_file);
     if (!fout) return;
-
-    fout << std::left << std::setw(15) << "Vardas"
-        << std::left << std::setw(20) << "Pavarde"
-        << std::right << std::setw(20) << "Galutinis (Vid.)"
-        << std::right << std::setw(20) << "Galutinis (Med.)" << '\n';
-    fout << std::string(75, '-') << '\n';
-
+    fout << left << setw(15) << "Vardas"
+        << left << setw(20) << "Pavarde"
+        << right << setw(20) << "Galutinis (Vid.)"
+        << right << setw(20) << "Galutinis (Med.)" << '\n';
+    fout << string(75, '-') << '\n';
     for (const auto& st : Grupe) {
-        fout << std::left << std::setw(15) << st.var
-            << std::left << std::setw(20) << st.pav
-            << std::right << std::setw(20) << std::fixed << std::setprecision(2) << st.galVid
-            << std::right << std::setw(20) << std::fixed << std::setprecision(2) << st.galMed
-            << '\n';
+        fout << left << setw(15) << st.var
+            << left << setw(20) << st.pav
+            << right << setw(20) << fixed << setprecision(2) << st.galVid
+            << right << setw(20) << fixed << setprecision(2) << st.galMed << '\n';
     }
 }
+

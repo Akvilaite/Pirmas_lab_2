@@ -4,7 +4,6 @@
 #include <limits>
 #include <cstdlib>
 #include <ctime>
-
 using namespace std;
 
 Studentas Stud_iv(int budas) {
@@ -16,4 +15,3 @@ Studentas Stud_iv(int budas) {
     st.galMed = 1.0;
     return st;
 }
-

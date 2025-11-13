@@ -8,7 +8,6 @@
 #include "studentas.h"
 #include "failai.h"
 #include "rusiavimas.h"
-
 using namespace std;
 using namespace std::chrono;
 
@@ -26,9 +25,7 @@ int main() {
         cin.ignore(10000, '\n');
     }
 
-    double failoLaikas = 0.0;
-    double rusiavimoLaikas = 0.0;
-    double isvedimoLaikas = 0.0;
+    double failoLaikas = 0.0, rusiavimoLaikas = 0.0, isvedimoLaikas = 0.0;
 
     cout << "\nPasirinkite veiksma:\n";
     cout << "1 - Zinomas pazymiu skaicius\n";
@@ -56,7 +53,6 @@ int main() {
     if (budas == 4) {
         cout << "Iveskite failo pavadinima: ";
         cin >> fname;
-
         auto start = high_resolution_clock::now();
         vGrupe = Stud_from_file(fname);
         auto end = high_resolution_clock::now();
@@ -100,13 +96,23 @@ int main() {
         cin.ignore(10000, '\n');
     }
 
+    int strategija;
+    cout << "\nPasirinkite strategija:\n";
+    cout << "2 - Klasikine versija (erase/remove)\n";
+    cout << "3 - Optimizuota versija (partition/splice)\n";
+    while (!(cin >> strategija) || (strategija != 2 && strategija != 3)) {
+        cout << "Neteisingas pasirinkimas. Bandykite dar karta: ";
+        cin.clear();
+        cin.ignore(10000, '\n');
+    }
+
     if (konteinerisTipas == 1) {
         vector<Studentas> vargsiukai;
-
         Rikiuoti(vGrupe);
 
         auto startR = high_resolution_clock::now();
-        Strategija2(vGrupe, vargsiukai, kriterijus);
+        if (strategija == 2) Strategija2(vGrupe, vargsiukai, kriterijus);
+        else Strategija3(vGrupe, vargsiukai, kriterijus);
         auto endR = high_resolution_clock::now();
         rusiavimoLaikas = duration_cast<duration<double>>(endR - startR).count();
 
@@ -118,11 +124,11 @@ int main() {
     }
     else {
         list<Studentas> vargsiukai;
-
         Rikiuoti(lGrupe);
 
         auto startR = high_resolution_clock::now();
-        Strategija2(lGrupe, vargsiukai, kriterijus);
+        if (strategija == 2) Strategija2(lGrupe, vargsiukai, kriterijus);
+        else Strategija3(lGrupe, vargsiukai, kriterijus);
         auto endR = high_resolution_clock::now();
         rusiavimoLaikas = duration_cast<duration<double>>(endR - startR).count();
 
@@ -148,3 +154,4 @@ int main() {
 
     return 0;
 }
+
