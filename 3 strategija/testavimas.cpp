@@ -59,38 +59,37 @@ int main() {
     const int runs = 3;
 
     cout << '\n';
-    // Header for visual separation
+
     cout << left << setw(40) << "Vektoriai:" << "List'ai:" << '\n';
 
     for (int size : sizes) {
         string filename = "stud" + to_string(size) + ".txt";
         GenerateTestFile(filename, size);
 
-        // accumulators for averages
+
         double v_file_sum = 0.0, v_sort_sum = 0.0, v_out_sum = 0.0;
         double l_file_sum = 0.0, l_sort_sum = 0.0, l_out_sum = 0.0;
 
         for (int r = 0; r < runs; ++r) {
-            // VECTOR RUN
+  
             vector<Studentas> v;
             auto t0 = high_resolution_clock::now();
             v = Stud_from_file(filename);
             auto t1 = high_resolution_clock::now();
             double v_file = duration_cast<duration<double>>(t1 - t0).count();
 
-            // prepare copy for manipulation
             vector<Studentas> vcopy = v;
-            // measure sort + partition (we will sort by galVid descending and then call Strategija3)
+           
             auto t2 = high_resolution_clock::now();
             sort(vcopy.begin(), vcopy.end(), [](const Studentas& a, const Studentas& b) {
                 return a.galVid > b.galVid;
                 });
             vector<Studentas> v_vargsiukai;
-            Strategija3(vcopy, v_vargsiukai, 1); // kriterijus = 1 => pagal galVid
+            Strategija3(vcopy, v_vargsiukai, 1); 
             auto t3 = high_resolution_clock::now();
             double v_sort = duration_cast<duration<double>>(t3 - t2).count();
 
-            // measure output: write vargsiukai and kietiakai to temp files
+         
             auto t4 = high_resolution_clock::now();
             Spausdinti(v_vargsiukai, "vargsiukai_temp.txt");
             Spausdinti(vcopy, "kietiakai_temp.txt");
@@ -141,8 +140,7 @@ int main() {
         double l_out_avg = l_out_sum / runs;
         double l_total = l_file_avg + l_sort_avg + l_out_avg;
 
-        // Print formatted block as requested
-        // Two columns: left = Vector, right = List
+       
         cout << "\nSu " << size << ":" << setw(36 - to_string(size).length()) << "" << "Su " << size << ":\n";
 
         cout << left << setw(25) << "Failo nuskaitymas"
